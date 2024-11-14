@@ -1,3 +1,11 @@
+# PID 控制程式範例
+
+這是用 Python 實現的 PID 控制程式，演示如何根據比例、積分和微分項來調整控制信號，並用於模擬控制系統。
+
+## 程式碼範例
+
+以下是用 Python 實現的 PID 控制程式：
+
 ```python
 import time
 
@@ -11,6 +19,7 @@ class PID:
         self.integral = 0  # 積分項的累積誤差
 
     def compute(self, setpoint, measured_value):
+        # 計算 PID 控制輸出
         error = setpoint - measured_value  # 計算誤差
         self.integral += error  # 累積誤差（積分項）
         derivative = error - self.previous_error  # 計算誤差變化率（微分項）
@@ -22,6 +31,17 @@ class PID:
         self.previous_error = error
 
         return output
+
+# 模擬的系統
+class Process:
+    def __init__(self):
+        self.value = 0  # 初始化系統輸出
+
+    def update(self, control_signal):
+        # 模擬系統響應（簡化為控制信號直接影響系統狀態）
+        self.value += control_signal
+        # 限制系統輸出的最大值和最小值
+        self.value = max(0, min(self.value, 100))
 
 # 主程式
 if __name__ == "__main__":
