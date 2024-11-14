@@ -1,17 +1,9 @@
-# PID 控制程式範例
-
-這是用 Python 實現的 PID 控制程式，演示如何根據比例、積分和微分項來調整控制信號，並用於模擬控制系統。
-
-## 程式碼範例
-
-以下是用 Python 實現的 PID 控制程式：
-
-```python
 import time
 
 # PID 控制器類
 class PID:
     def __init__(self, Kp, Ki, Kd):
+        # 初始化 PID 參數
         self.Kp = Kp    # 比例增益
         self.Ki = Ki    # 積分增益
         self.Kd = Kd    # 微分增益
