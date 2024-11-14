@@ -1,0 +1,51 @@
+import time
+
+# PID 控制器類
+class PID:
+    def __init__(self, Kp, Ki, Kd):
+        # 初始化 PID 參數
+        self.Kp = Kp    # 比例增益
+        self.Ki = Ki    # 積分增益
+        self.Kd = Kd    # 微分增益
+        self.previous_error = 0  # 上次誤差
+        self.integral = 0  # 積分項的累積誤差
+
+    def compute(self, setpoint, measured_value):
+        # 計算 PID 控制輸出
+        error = setpoint - measured_value  # 計算誤差
+        self.integral += error  # 累積誤差（積分項）
+        derivative = error - self.previous_error  # 計算誤差變化率（微分項）
+
+        # PID 控制公式
+        output = self.Kp * error + self.Ki * self.integral + self.Kd * derivative
+
+        # 更新前次誤差
+        self.previous_error = error
+
+        return output
+
+# 模擬的系統
+class Process:
+    def __init__(self):
+        self.value = 0  # 初始化系統輸出
+
+    def update(self, control_signal):
+        # 模擬系統響應（簡化為控制信號直接影響系統狀態）
+        self.value += control_signal
+        # 限制系統輸出的最大值和最小值
+        self.value = max(0, min(self.value, 100))
+
+# 主程式
+if __name__ == "__main__":
+    setpoint = 50  # 設定目標值
+    pid = PID(Kp=1.2, Ki=1.0, Kd=0.01)  # 初始化 PID 控制器
+    process = Process()  # 初始化系統
+    time_step = 0.1  # 控制周期（秒）
+
+    # 模擬運行
+    for _ in range(100):
+        measured_value = process.value  # 取得當前系統輸出
+        control_signal = pid.compute(setpoint, measured_value)  # 計算控制信號
+        process.update(control_signal)  # 更新系統狀態
+        print(f"Setpoint: {setpoint}, Measured: {measured_value:.2f}, Control: {control_signal:.2f}")
+        time.sleep(time_step)  # 延遲一段時間模擬實時控制
