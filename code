@@ -57,7 +57,3 @@ if __name__ == "__main__":
         process.update(control_signal)  # 更新系統狀態
         print(f"Setpoint: {setpoint}, Measured: {measured_value:.2f}, Control: {control_signal:.2f}")
         time.sleep(time_step)  # 延遲一段時間模擬實時控制
-
-```diff
-+ this will be highlighted in green
-- this will be highlighted in red
